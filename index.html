@@ -1,39 +1,463 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='style_test.css'>
-    <!-- <script src='main.js'></script> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A. Nathanaël Dossa | Physical Oceanographer</title>
+  <meta name="description" content="A. Nathanaël Dossa, physical oceanographer at the Rosenstiel School, University of Miami. Mesoscale and submesoscale dynamics, SWOT, sea surface salinity, ocean literacy.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --abyss: #0f2a44;      /* deep water, from the banner */
+      --current: #1f6f8b;    /* links, accents */
+      --foam: #f6f8f9;       /* page surface */
+      --paper: #ffffff;      /* content panel */
+      --ink: #1c2630;        /* body text */
+      --muted: #5b6875;      /* secondary text */
+      --line: #d9e1e7;
+      --sand: #e9dfcc;       /* timeline marks */
+      --serif: "Newsreader", Georgia, "Times New Roman", serif;
+      --sans: "IBM Plex Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --abyss: #0a1c2e;
+        --current: #6cc3dc;
+        --foam: #0e151c;
+        --paper: #141e27;
+        --ink: #e3e9ee;
+        --muted: #9aa8b4;
+        --line: #26333f;
+        --sand: #4a4231;
+        color-scheme: dark;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+    body {
+      margin: 0;
+      background: var(--foam);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 1rem;
+      line-height: 1.6;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    a { color: var(--current); text-underline-offset: 2px; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--current); outline-offset: 2px; }
 
+    /* ---------- Banner + tabs (same idea as the current site) ---------- */
+    header.banner {
+      /* Put your own banner photo in images/banner.jpg (the cliffs + sea picture) */
+      background:
+        linear-gradient(rgba(10, 28, 46, .35), rgba(10, 28, 46, .55)),
+        url("images/banner.jpg") center 40% / cover no-repeat,
+        var(--abyss);
+      color: #fff;
+      padding-top: env(safe-area-inset-top, 0px);
+    }
+    .banner-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 3.5rem 1.25rem 0;
+    }
+    .banner h1 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.05;
+      margin: 0;
+    }
+    .banner p.role {
+      margin: .5rem 0 2.25rem;
+      font-size: 1.05rem;
+      opacity: .9;
+    }
+    nav.tabs {
+      display: flex;
+      gap: .25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    nav.tabs::-webkit-scrollbar { display: none; }
+    nav.tabs a {
+      flex: 0 0 auto;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: .95rem;
+      padding: .8rem 1.2rem;
+      border-radius: 4px 4px 0 0;
+      white-space: nowrap;
+    }
+    nav.tabs a:hover { background: rgba(255, 255, 255, .12); }
+    nav.tabs a[aria-current="page"] {
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    /* ---------- Content ---------- */
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: var(--paper);
+      padding: 2.5rem 1.25rem 4rem;
+      min-height: 60vh;
+    }
+    section { max-width: 76ch; }
+    section[hidden] { display: none; }
+    section.wide { max-width: none; }
+    h2 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 1.15;
+      margin: 0 0 1.25rem;
+      color: var(--abyss);
+    }
+    @media (prefers-color-scheme: dark) { h2 { color: var(--ink); } }
+    h3 {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.3rem;
+      margin: 2.25rem 0 .75rem;
+    }
+    p.lead { font-family: var(--serif); font-size: 1.2rem; line-height: 1.55; }
+    .muted { color: var(--muted); }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 3rem;
+      max-width: none;
+    }
+    .home-grid > div:first-child { max-width: 72ch; }
+    .card-side {
+      border-left: 3px solid var(--current);
+      padding-left: 1.25rem;
+      font-size: .95rem;
+    }
+    .card-side p { margin: 0 0 1rem; }
+    .portrait {
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--line);
+      display: block;
+      margin-bottom: 1.25rem;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; list-style: none; }
+    .tags li {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: .25rem .8rem;
+      font-size: .9rem;
+    }
+
+    /* Timeline for positions, education, cruises */
+    ol.timeline { list-style: none; padding: 0; margin: 0; }
+    ol.timeline li {
+      display: grid;
+      grid-template-columns: 9.5rem minmax(0, 1fr);
+      gap: 1rem;
+      padding: .9rem 0;
+      border-top: 1px solid var(--line);
+    }
+    ol.timeline .when { color: var(--muted); font-variant-numeric: tabular-nums; }
+    ol.timeline strong { display: block; }
+    ol.timeline span.detail { color: var(--muted); font-size: .95rem; }
+
+    /* Publications */
+    ol.pubs { padding-left: 1.4rem; }
+    ol.pubs li { margin-bottom: 1rem; padding-left: .25rem; }
+    ol.pubs .me { font-weight: 600; }
+    ol.pubs em { font-style: italic; }
+
+    /* Clocks */
+    .clocks {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .clock .city { color: var(--muted); font-size: .9rem; }
+    .clock .time {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+    }
+
+    footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 760px) {
+      .home-grid { grid-template-columns: 1fr; gap: 2rem; }
+      ol.timeline li { grid-template-columns: 1fr; gap: .15rem; }
+      .banner-inner { padding-top: 2.25rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class ="Ecran">
-        <div class="row">
-            <div class="col"> 
-                <h3>
-                    <a style="text-decoration:none;" href="https://www.zeitverschiebung.net/en/city/4930956"><span style="color:gray;">Current local time in</span><br />Boston, United States</a></h3>
-                <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=medium&timezone=America%2FNew_York" width="100%" height="115" frameborder="0" seamless></iframe>
-            </div>
-            <div class="col">
-                <h3><span style="color:gray;">Current local time in</span><br />Paris, France
-                <img class="Drapeau" src="https://www.zeitverschiebung.net/img/flag-icon-css/flags/4x3/fr.svg" alt="France Europe" width="40" height="30">
-                </h3> 
-                <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=medium&timezone=Europe%2FParis" width="100%" height="115" frameborder="0" seamless></iframe>
-            </div>
-            <div class="col">
-                <h3><span style="color:gray;">Current local time in</span><br/>Porto-Novo, Benin
-                <img class="Drapeau" src="https://www.zeitverschiebung.net/img/flag-icon-css/flags/4x3/bj.svg" alt="Benin Africa" width="40" height="30">
-                </h3>
-                <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=en&size=medium&timezone=Africa%2FPorto-Novo" width="100%" height="115" frameborder="0" seamless></iframe> 
-            </div>
-        </div>
+
+<header class="banner">
+  <div class="banner-inner">
+    <h1>A. Nathanaël Dossa</h1>
+    <p class="role">Physical oceanographer, Rosenstiel School, University of Miami</p>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#home">Home</a>
+      <a href="#papers">Papers</a>
+      <a href="#project">Project</a>
+      <a href="#phd">My PhD</a>
+      <a href="#at-sea">Upon on sea</a>
+      <a href="#resources">Resources</a>
+      <a href="#leisure">Leisure</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HOME ================= -->
+  <section id="home" class="wide">
+    <div class="home-grid">
+      <div>
+        <h2>Ocean dynamics, from the Gulf of Guinea to the Cape Basin</h2>
+        <p class="lead">I am a postdoctoral associate at the Rosenstiel School of Marine, Atmospheric, and Earth Science (University of Miami). I study mesoscale and submesoscale dynamics in the Cape Basin using moorings and the new SWOT satellite, and I coordinate ocean literacy activities in Africa for the EU-funded OPERA project.</p>
+        <p>Before Miami, I worked on the Amazon Plume (AMAZOMIX), on salinity during the S-MODE experiment at Woods Hole, and on SWOT moorings at Scripps. My PhD at the Federal University of Pernambuco looked at near-surface circulation off Northeast Brazil and at coastal salinity gradients worldwide.</p>
+
+        <h3>Research interests</h3>
+        <ul class="tags">
+          <li>Coastal erosion</li>
+          <li>Climate change impacts</li>
+          <li>Plastic debris in the oceans</li>
+          <li>Climate intervention</li>
+          <li>Ocean literacy</li>
+        </ul>
+
+        <h3>Positions</h3>
+        <ol class="timeline">
+          <li><span class="when">2025 – present</span><div><strong>Coordinator for ocean literacy activities in Africa</strong><span class="detail">EU-funded OPERA project</span></div></li>
+          <li><span class="when">2024 – present</span><div><strong>Postdoctoral Associate</strong><span class="detail">RSMAS, University of Miami, USA</span></div></li>
+          <li><span class="when">2024</span><div><strong>Associate Researcher</strong><span class="detail">Benin Fisheries and Oceanological Research Institute</span></div></li>
+          <li><span class="when">2023 – 2024</span><div><strong>Postdoctoral Researcher</strong><span class="detail">Federal University of Pernambuco, Recife, Brazil</span></div></li>
+          <li><span class="when">Jul – Sep 2023</span><div><strong>Guest Investigator</strong><span class="detail">Scripps Institution of Oceanography, San Diego, USA</span></div></li>
+          <li><span class="when">Apr – Jun 2023</span><div><strong>Guest Investigator</strong><span class="detail">Woods Hole Oceanographic Institution, USA</span></div></li>
+          <li><span class="when">2022</span><div><strong>Associate Researcher in Physical Oceanography</strong><span class="detail">Benin Fisheries and Oceanological Research Institute</span></div></li>
+          <li><span class="when">2018 – 2019</span><div><strong>Teaching Assistant</strong><span class="detail">Federal University of Pernambuco, Brazil</span></div></li>
+          <li><span class="when">2013 – 2015</span><div><strong>Physics and Chemistry Teacher</strong><span class="detail">Public high schools, Benin</span></div></li>
+        </ol>
+
+        <h3>Honors</h3>
+        <ol class="timeline">
+          <li><span class="when">2024</span><div><strong>NASA Group Achievement Award</strong><span class="detail">S-MODE team, for advancing understanding of small-scale ocean dynamics</span></div></li>
+          <li><span class="when">2016 – 2021</span><div><strong>CAPES Scholarship</strong><span class="detail">Brazil</span></div></li>
+          <li><span class="when">2015 – 2016</span><div><strong>TOTAL–IRD MSc Scholarship</strong></div></li>
+          <li><span class="when">2009 – 2012</span><div><strong>Benin Government Scholarship</strong></div></li>
+        </ol>
+      </div>
+
+      <aside class="card-side">
+        <!-- Replace with your photo: images/portrait.jpg -->
+        <img class="portrait" src="images/portrait.jpg" alt="Portrait of A. Nathanaël Dossa">
+        <p><strong>Contact</strong><br>
+          <a href="mailto:axd2447@miami.edu">axd2447@miami.edu</a><br>
+          <a href="mailto:nath2dossa@gmail.com">nath2dossa@gmail.com</a></p>
+        <p><strong>Address</strong><br>
+          Ocean Sciences Department, RSMAS #0240<br>
+          University of Miami, Miami, FL, USA</p>
+        <p><strong>Languages</strong><br>
+          French, English, Portuguese (proficient), Spanish (intermediate), Pedah, Fon, Adja, Mina, Goun</p>
+        <p><strong>Tools</strong><br>MATLAB, Python</p>
+      </aside>
     </div>
 
+    <div class="clocks" aria-label="Local times">
+      <div class="clock"><div class="city">Miami, USA</div><div class="time" data-tz="America/New_York">--:--</div></div>
+      <div class="clock"><div class="city">Paris, France</div><div class="time" data-tz="Europe/Paris">--:--</div></div>
+      <div class="clock"><div class="city">Porto-Novo, Benin</div><div class="time" data-tz="Africa/Porto-Novo">--:--</div></div>
+      <div class="clock"><div class="city">Recife, Brazil</div><div class="time" data-tz="America/Recife">--:--</div></div>
+    </div>
+  </section>
 
+  <!-- ================= PAPERS ================= -->
+  <section id="papers" hidden>
+    <h2>Papers</h2>
 
+    <h3>Peer-reviewed</h3>
+    <ol class="pubs" reversed>
+      <li>Giachini Tosetto, E., Lett, C., Koch-Larrouy, A., Costa da Silva, A., Neumann-Leitão, S., Nogueira Junior, M., Barrier, N., <span class="me">Dossa, A. N.</span>, … &amp; Bertrand, A. (2026). Species dispersal and community assembly facing the AMOC. <em>Progress in Oceanography</em>.</li>
+      <li>Bonou, F., Hounsou-Gbo, G. A., <span class="me">Dossa, A. N.</span>, Toupe, M. K., Kouakou, M., Kouekam, A., … &amp; Tye, M. R. (2025). Global and regional thermosteric and dynamic sea level change under stratospheric aerosol injection. <em>Environmental Research: Climate</em>.</li>
+      <li>Bonou, F., <span class="me">Dossa, A. N.</span>, Dahunsi, A. M., &amp; Sohou, Z. (2024). Interannual and seasonal variability of CO<sub>2</sub> parameters in the tropical Atlantic Ocean. <em>Journal of Marine Science and Engineering</em>, 12(12), 2248.</li>
+      <li>Giachini Tosetto, E., Lett, C., Koch-Larrouy, A., Costa da Silva, A., Neumann-Leitão, S., Nogueira Junior, M., Barrier, N., <span class="me">Dossa, A. N.</span>, … &amp; Bertrand, A. (2024). Identifying community assembling zones and connectivity pathways in the Tropical Southwestern Atlantic Ocean. <em>Ecography</em>, e07110.</li>
+      <li><span class="me">Dossa, A. N.</span>, da Silva, A. C., Hernandez, F., et al. (2022). Mesoscale eddies in the southwestern tropical Atlantic. <em>Frontiers in Marine Science</em>.</li>
+      <li><span class="me">Dossa, A. N.</span>, Alory, G., da Silva, A. C., Dahunsi, A. M., &amp; Bertrand, A. (2021). Global analysis of coastal gradients of sea surface salinity. <em>Remote Sensing</em>, 13(13), 2507.</li>
+      <li>da Silva, A. C., Chaigneau, A., <span class="me">Dossa, A. N.</span>, Eldin, G., Araujo, M., &amp; Bertrand, A. (2021). Surface circulation and vertical structure of upper ocean variability around Fernando de Noronha and Rocas atoll. <em>Frontiers in Marine Science</em>.</li>
+      <li><span class="me">Dossa, A. N.</span>, Costa da Silva, A., Chaigneau, A., Eldin, G., Araujo, M., &amp; Bertrand, A. (2021). Near-surface western boundary circulation of Northeast Brazil. <em>Progress in Oceanography</em>, 190, 102475.</li>
+      <li><span class="me">Dossa, A. N.</span>, Da-Allada, C., Herbert, G., &amp; Bourlès, B. (2019). Seasonal cycle of the salinity barrier layer in the northeastern Gulf of Guinea. <em>African Journal of Marine Science</em>, 41, 163–175.</li>
+    </ol>
 
+    <h3>Under review and in preparation</h3>
+    <ol class="pubs">
+      <li>da Silva, A. C., Artana, C., <span class="me">Dossa, A. N.</span>, et al. Submesoscale dynamics in the Amazon Plume during AMAZOMIX. Under review in <em>Progress in Oceanography</em>.</li>
+      <li><span class="me">Dossa, A. N.</span>, Beal, L. M., Novelli, G., Farrar, J. T., et al. Evaluating SWOT’s performance in the Cape Basin. <em>JGR: Oceans</em> (in prep.).</li>
+      <li><span class="me">Dossa, A. N.</span>, Beal, L. M., Novelli, G., Farrar, J. T., et al. Mesoscale and submesoscale contributions to sea surface height variability in the Cape Basin revealed by moored observations. <em>JGR: Oceans</em> (in prep.).</li>
+    </ol>
+
+    <h3>Peer reviewer for</h3>
+    <p>Geophysical Research Letters, Science of the Total Environment, New Zealand Journal of Marine and Freshwater Research.</p>
+  </section>
+
+  <!-- ================= PROJECT ================= -->
+  <section id="project" hidden>
+    <h2>Projects</h2>
+
+    <h3>SWOT in the Cape Basin</h3>
+    <p>At the University of Miami, with Lisa Beal, I use moored observations and Surface Water and Ocean Topography (SWOT) satellite data to separate mesoscale and submesoscale contributions to sea surface height in the Cape Basin, and to evaluate how well SWOT captures them. This work is part of the QUICCHE project.</p>
+
+    <h3>OPERA: ocean literacy in Africa</h3>
+    <p>Since 2025 I coordinate the development and dissemination of outreach and ocean literacy materials in Africa within the EU-funded OPERA project.</p>
+
+    <h3>FOCUS: Florida Current and sea level</h3>
+    <p>Fieldwork in the Florida Straits, deploying and recovering CPIES and moorings (2024, 2026).</p>
+
+    <h3>Earlier projects</h3>
+    <ol class="timeline">
+      <li><span class="when">2023 – 2024</span><div><strong>AMAZOMIX</strong><span class="detail">Near-surface and submesoscale dynamics in the Amazon Plume</span></div></li>
+      <li><span class="when">2023</span><div><strong>S-MODE</strong><span class="detail">Salinity and submesoscale ocean dynamics, WHOI and NASA</span></div></li>
+      <li><span class="when">2023</span><div><strong>SIO–SWOT moorings</strong><span class="detail">Mooring data analysis at Scripps</span></div></li>
+      <li><span class="when">2022 – 2025</span><div><strong>Stratospheric aerosol injection in the tropical Atlantic</strong><span class="detail">Sea level, thermohaline structure and carbon parameters under climate intervention scenarios</span></div></li>
+    </ol>
+  </section>
+
+  <!-- ================= MY PHD ================= -->
+  <section id="phd" hidden>
+    <h2>My PhD</h2>
+    <p class="lead">Near-surface ocean dynamics of Northeast Brazil and coastal sea surface salinity gradients in the world ocean.</p>
+    <p>PhD in Physical Oceanography, Federal University of Pernambuco, Recife, Brazil (2016–2021), funded by a CAPES scholarship. Part of the work was done during a 2020 internship at LEGOS (University of Toulouse III, France) on the global analysis of coastal sea surface salinity gradients.</p>
+    <p>Main results were published in <em>Progress in Oceanography</em> (2021) on the western boundary circulation of Northeast Brazil, and in <em>Remote Sensing</em> (2021) on coastal salinity gradients. See <a href="#papers">Papers</a>.</p>
+
+    <h3>Education</h3>
+    <ol class="timeline">
+      <li><span class="when">2016 – 2021</span><div><strong>PhD, Physical Oceanography</strong><span class="detail">Federal University of Pernambuco, Brazil</span></div></li>
+      <li><span class="when">2015 – 2016</span><div><strong>Master’s, Physical Oceanography and Applications</strong><span class="detail">University Paul Sabatier, Toulouse, France. Thesis: near-surface dynamics of upper layers in the northeastern Gulf of Guinea</span></div></li>
+      <li><span class="when">2008 – 2013</span><div><strong>Bachelor’s in Physics</strong><span class="detail">University of Abomey-Calavi, Benin</span></div></li>
+      <li><span class="when">2007</span><div><strong>High school diploma</strong><span class="detail">High School of Dogbo, Benin</span></div></li>
+    </ol>
+  </section>
+
+  <!-- ================= AT SEA ================= -->
+  <section id="at-sea" hidden>
+    <h2>Upon on sea</h2>
+    <p class="lead">51 days at sea, in the Atlantic and the Pacific.</p>
+    <ol class="timeline">
+      <li><span class="when">2026</span><div><strong>FOCUS cruise, Atlantic</strong><span class="detail">CPIES and mooring deployment and recovery</span></div></li>
+      <li><span class="when">2024</span><div><strong>FOCUS cruise, Atlantic</strong><span class="detail">CPIES deployment</span></div></li>
+      <li><span class="when">2023</span><div><strong>R/V Sally Ride, Pacific</strong><span class="detail">Deployment and recovery of CCE buoys, CTD casts</span></div></li>
+      <li><span class="when">2023</span><div><strong>S-MODE IOP2</strong><span class="detail">Remote operation of Wave Gliders</span></div></li>
+      <li><span class="when">2017</span><div><strong>PIRATA–Brazil cruise, Atlantic</strong><span class="detail">Deployment and recovery of PIRATA buoys, CTD casts</span></div></li>
+    </ol>
+    <!-- Add photos: <img src="images/focus2026.jpg" alt="..." style="max-width:100%"> -->
+  </section>
+
+  <!-- ================= RESOURCES ================= -->
+  <section id="resources" hidden>
+    <h2>Resources</h2>
+
+    <h3>Teaching and training</h3>
+    <ol class="timeline">
+      <li><span class="when">Oct 2026</span><div><strong>Instructor, GGOSSS-2026</strong><span class="detail">UNESCO ICPMA Chair, University of Abomey-Calavi, Benin. Course: techniques for in-situ data acquisition and their evolution over time</span></div></li>
+      <li><span class="when">Aug 2025</span><div><strong>Instructor and scientific committee, GGOSSS-2025</strong><span class="detail">First Gulf of Guinea Ocean Sciences Summer School, University of Dschang, Cameroon</span></div></li>
+      <li><span class="when">2018 – 2019</span><div><strong>Teaching Assistant</strong><span class="detail">Introduction to Physical Oceanography; Ocean–Atmosphere Interaction (UFPE)</span></div></li>
+    </ol>
+
+    <h3>Student supervision</h3>
+    <ol class="timeline">
+      <li><span class="when">2026</span><div><strong>Jean de Dieu Akpaca, Master’s (co-supervisor)</strong><span class="detail">Modeling coastal flooding in Benin using deep learning</span></div></li>
+      <li><span class="when">2026</span><div><strong>Ulrich Vinagbe, Master 1</strong><span class="detail">Geostrophic and cyclogeostrophic velocities of mesoscale eddies in the Gulf of Guinea from altimetry</span></div></li>
+      <li><span class="when">2026</span><div><strong>Adam Moitapéouh, Master 1</strong><span class="detail">Seasonality and dynamics of coastal upwelling in the northern Gulf of Guinea</span></div></li>
+      <li><span class="when">2025</span><div><strong>Dibril Sadikou, Master’s (co-supervisor)</strong><span class="detail">Impacts of stratospheric geoengineering on carbon fluxes in the tropical Atlantic</span></div></li>
+      <li><span class="when">2024</span><div><strong>Frederic Akotegnon, Master’s (co-supervisor)</strong><span class="detail">Impact of stratospheric geoengineering on carbon parameters in the Gulf of Guinea</span></div></li>
+      <li><span class="when">2023</span><div><strong>Maiella Toupe, Master’s (co-supervisor)</strong><span class="detail">Impact of stratospheric aerosol injection on the thermohaline structure of the northern Gulf of Guinea</span></div></li>
+    </ol>
+
+    <h3>Talks and conferences (selection)</h3>
+    <ol class="timeline">
+      <li><span class="when">Jun 2026</span><div><strong>QUICCHE Science Meeting</strong><span class="detail">University of Rhode Island, speaker</span></div></li>
+      <li><span class="when">Jun 2026</span><div><strong>Gordon Research Conference and Seminar on Ocean Mixing</strong><span class="detail">Mount Holyoke College, posters</span></div></li>
+      <li><span class="when">Feb 2026</span><div><strong>Ocean Science Conference, Glasgow</strong><span class="detail">Session convener</span></div></li>
+      <li><span class="when">Oct 2025</span><div><strong>SWOT Science Team Meeting</strong><span class="detail">Arcachon, France, poster</span></div></li>
+      <li><span class="when">Feb 2025</span><div><strong>Invited seminar, Fishing Institute</strong><span class="detail">University of Douala, Cameroon</span></div></li>
+      <li><span class="when">Jan 2025</span><div><strong>Invited seminar, COMPASS</strong><span class="detail">University of Miami</span></div></li>
+      <li><span class="when">Jun 2023</span><div><strong>Invited seminar, WHOI</strong><span class="detail">Near-surface ocean dynamics off Northeast Brazil</span></div></li>
+    </ol>
+
+    <h3>Certificates</h3>
+    <ol class="timeline">
+      <li><span class="when">Jul 2026</span><div><strong>Climate Change and Global Affairs</strong><span class="detail">Three-course specialization by the Council on Foreign Relations (Coursera): climate basics, mitigation and adaptation, policy obstacles and opportunities. <a href="https://coursera.org/verify/specialization/FHVAFAV7K1VT">Verify certificate</a></span></div></li>
+    </ol>
+
+    <!-- Si vous mettez votre CV PDF dans le dépôt : -->
+    <p><a href="CV_NathanaelDossa.pdf">Download my CV (PDF)</a></p>
+  </section>
+
+  <!-- ================= LEISURE ================= -->
+  <section id="leisure" hidden>
+    <h2>Leisure</h2>
+    <h3>Community</h3>
+    <p>Elected General Secretary of the Benin Diaspora in Brazil (2024–2026), coordinating cultural, social and diplomatic initiatives.</p>
+    <!-- Ajoutez ici vos photos, hobbies, sports, voyages… -->
+  </section>
+
+</main>
+
+<footer>
+  © <span id="year"></span> A. Nathanaël Dossa. Last updated October 2026.
+</footer>
+
+<script>
+  // Tab navigation: one section visible at a time, driven by the URL hash
+  (function () {
+    var sections = document.querySelectorAll("main > section");
+    var links = document.querySelectorAll("nav.tabs a");
+    function show() {
+      var id = (location.hash || "#home").slice(1);
+      if (!document.getElementById(id)) id = "home";
+      sections.forEach(function (s) { s.hidden = s.id !== id; });
+      links.forEach(function (a) {
+        if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "page");
+        else a.removeAttribute("aria-current");
+      });
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener("hashchange", show);
+    show();
+
+    // Local clocks (no external widget needed)
+    var clocks = document.querySelectorAll(".clock .time");
+    function tick() {
+      var now = new Date();
+      clocks.forEach(function (el) {
+        el.textContent = now.toLocaleTimeString("en-GB", {
+          timeZone: el.dataset.tz, hour: "2-digit", minute: "2-digit"
+        });
+      });
+    }
+    tick();
+    setInterval(tick, 30000);
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  })();
+</script>
 </body>
 </html>
